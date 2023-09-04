@@ -4,6 +4,7 @@
   "description": "sit 725 week 3 prac",
   "main": "server.js",
   "scripts": {
+    "test": "mocha --reporter spec",
     "start": "node server.js"
   },
   "repository": {
@@ -25,7 +26,14 @@
   },
   "homepage": "https://github.com/ChoudharyNavit22/sit725-2021-t2-prac3#readme",
   "dependencies": {
+    "chai": "^4.3.8",
     "express": "^4.18.2",
-    "mongodb": "^4.17.0"
+    "mocha": "^10.2.0",
+    "mongodb": "^4.17.0",
+    "request": "^2.88.2",
+    "saslprep": "^1.0.3"
+  },
+  "devDependencies": {
+    "chai-http": "^4.4.0"
   }
 }
