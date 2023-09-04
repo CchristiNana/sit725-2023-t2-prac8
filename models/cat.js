@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb'); // Import ObjectId
 let client = require('../dbConnection');
 
 let collection = client.db().collection('Cats');
@@ -14,4 +15,4 @@ function deleteCat(id, callback) {
     collection.deleteOne({ _id: new ObjectId(id) }, callback);
 }
 
-module.exports = { postCat, getAllCats}
+module.exports = { postCat, getAllCats, deleteCat };

@@ -1,6 +1,5 @@
 let collection = require('../models/cat');
 
-
 const postCat = (req, res) => {
     let cat = req.body;
     collection.postCat(cat, (err, result) => {
