@@ -14,7 +14,4 @@ router.delete('/:id', (req, res) => {
     controller.deleteCat(req, res);
 });
 
-
 module.exports = router;
-
-

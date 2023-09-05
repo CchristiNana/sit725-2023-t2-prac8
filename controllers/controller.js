@@ -23,7 +23,7 @@ const deleteCat = (req, res) => {
     const id = req.params.id;
     console.log(`Attempting to delete cat with ID: ${id}`);
     
-    collection.deleteOne({ _id: ObjectId(id) }, (err, result) => {
+    collection.deleteCat(id, (err, result) => {
         if (err) {
             console.error(`Error occurred: ${err}`);
             res.status(500).json({ message: 'Internal Server Error' });
@@ -38,6 +38,4 @@ const deleteCat = (req, res) => {
 };
 
 module.exports = { postCat, getAllCats, deleteCat}
-
-
 

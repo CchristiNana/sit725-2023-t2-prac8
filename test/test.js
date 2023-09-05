@@ -2,31 +2,24 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server');
 const should = chai.should();
+let cat = {
+    title: "Test Cat",
+    subTitle: "Sub Test Cat",
+    path: "kitten.jpg",
+    description: "This is a test cat"
+};
 
 chai.use(chaiHttp);
 
 //test will start after database has been connected.
 before(function(done) {
-    this.timeout(20000); 
+    this.timeout(20000);
     const client = require('../dbConnection');
     client.connect(err => {
-        if (err) {
-            console.error('Error connecting to MongoDB:', err);
-            done(err);
-        } else {
-            console.log('Successfully connected to MongoDB.');
-            try {
-                require('../models/cat').initialize(client);
-                console.log('Collection initialized.');
-                done();
-            } catch (e) {
-                console.error('Error during collection initialization:', e);
-                done(e);
-            }
-        }
+        if (err) done(err);
+        else done();
     });
 });
-
 
 describe('/GET cats', () => {
     it('it should GET all the cats', (done) => {
@@ -43,13 +36,6 @@ describe('/GET cats', () => {
 
 describe('/POST cat', () => {
     it('it should POST a new cat', (done) => {
-        let cat = {
-            title: "Test Cat",
-            subTitle: "Sub Test Cat",
-            path: "kitten.jpg",
-            description: "This is a test cat"
-        };
-
         chai.request(server)
             .post('/api/cat')
             .send(cat)
@@ -64,14 +50,14 @@ describe('/POST cat', () => {
 
 describe('/DELETE/:id cat', () => {
     it('it should DELETE a cat given the id', (done) => {
-        let id = "64f585de85f7b6089f561684"; 
+        let id = "64e451d9dfa046248ff0d6a1"; 
 
         chai.request(server)
             .delete('/api/cat/' + id)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.property('message').eql('success');
+                res.body.should.have.property('message').eql('Cat deleted successfully');
                 done();
             });
     });
