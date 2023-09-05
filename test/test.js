@@ -7,13 +7,26 @@ chai.use(chaiHttp);
 
 //test will start after database has been connected.
 before(function(done) {
-    this.timeout(20000);
+    this.timeout(20000); 
     const client = require('../dbConnection');
     client.connect(err => {
-        if (err) done(err);
-        else done();
+        if (err) {
+            console.error('Error connecting to MongoDB:', err);
+            done(err);
+        } else {
+            console.log('Successfully connected to MongoDB.');
+            try {
+                require('../models/cat').initialize(client);
+                console.log('Collection initialized.');
+                done();
+            } catch (e) {
+                console.error('Error during collection initialization:', e);
+                done(e);
+            }
+        }
     });
 });
+
 
 describe('/GET cats', () => {
     it('it should GET all the cats', (done) => {
