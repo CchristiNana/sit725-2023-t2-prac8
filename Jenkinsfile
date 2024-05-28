@@ -2,12 +2,17 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "christinachensy/2023-t2-p8:${env.BUILD_NUMBER}"
-        MONGO_URI = credentials('mongodb-connection-string') // Ensure this matches the ID you set in Jenkins
+        DOCKER_IMAGE = "christinanachensy/2023-t2-p8:${env.BUILD_NUMBER}"
     }
 
     stages {
-        stage('Build') {
+        stage('Checkout SCM') {
+            steps {
+                // Checkout the code from the Git repository
+                git url: 'https://github.com/CchristiNana/sit725-2023-t2-prac8', branch: 'main'
+            }
+        }
+        stage('Build Docker Image') {
             steps {
                 script {
                     // Build the Docker image
@@ -15,22 +20,19 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Run Docker Container') {
             steps {
                 script {
-                    // Run tests
-                    sh 'npm test'
+                    // Run a container from the built image
+                    sh 'docker run -d -p 3000:3000 $DOCKER_IMAGE'
                 }
             }
         }
-        stage('Deploy') {
+        stage('Test Docker Container') {
             steps {
                 script {
-                    // Push the Docker image to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'ff1b1b02-aae4-4cc4-ab81-07e234547978', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                        sh 'docker push $DOCKER_IMAGE'
-                    }
+                    // Add commands to test your running container, if necessary
+                    sh 'curl http://localhost:3000'
                 }
             }
         }
