@@ -5,8 +5,7 @@ pipeline {
         DOCKER_IMAGE = "christinanachensy/sit725-2023-t2-prac8:${env.BUILD_NUMBER}"
         MONGO_URI = credentials('mongodb-connection-string') // Use Jenkins credentials for sensitive data
     }
-    }
-
+    
     stages {
         stage('Build') {
             steps {
@@ -35,4 +34,5 @@ pipeline {
             }
         }
     }
+}
 }
