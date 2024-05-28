@@ -3,9 +3,9 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "christinanachensy/sit725-2023-t2-prac8:${env.BUILD_NUMBER}"
-        MONGO_URI = credentials('mongodb-connection-string') // Use Jenkins credentials for sensitive data
+        MONGO_URI = credentials('mongodb-connection-string') // Ensure this matches the ID you set in Jenkins
     }
-    
+
     stages {
         stage('Build') {
             steps {
@@ -27,12 +27,12 @@ pipeline {
             steps {
                 script {
                     // Push the Docker image to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'ff1b1b02-aae4-4cc4-ab81-07e234547978', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                         sh 'docker push $DOCKER_IMAGE'
+                    }
                 }
             }
         }
     }
-}
 }
