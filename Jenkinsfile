@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "christinanachensy/2023-t2-p8:${env.BUILD_NUMBER}"
+        DOCKER_IMAGE = "facff3536d9c2119e5a7199b5e82ebdf6afa1d2972d7d13812fa067c095bd5a5:${env.BUILD_NUMBER}"
     }
 
     stages {
